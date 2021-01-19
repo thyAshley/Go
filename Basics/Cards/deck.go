@@ -3,6 +3,8 @@ package main
 import (
 	"fmt"
 	"io/ioutil"
+	"math/rand"
+	"os"
 	"strings"
 )
 
@@ -26,12 +28,6 @@ func (deck deckType) print() {
 	}
 }
 
-func (deck deckType) shuffle() {
-	for i, card := range deck {
-		fmt.Println(i, card)
-	}
-}
-
 func deal(deck deckType, handSize int) (deckType, deckType) {
 	return deck[:handSize], deck[handSize:]
 }
@@ -40,6 +36,23 @@ func (deck deckType) toString() string {
 	return strings.Join(deck, ",")
 }
 
+func (deck deckType) shuffle() deckType {
+	for i := range deck {
+		newPosition := rand.Intn(len(deck) - 1)
+		deck[i], deck[newPosition] = deck[newPosition], deck[i]
+	}
+	return deck
+}
+
 func (deck deckType) saveToFile(filename string) error {
 	return ioutil.WriteFile(filename, []byte(deck.toString()), 0666)
+}
+
+func getFromFile(filename string) deckType {
+	bs, error := ioutil.ReadFile(filename)
+	if error != nil {
+		fmt.Println("Error", error)
+		os.Exit(1)
+	}
+	return strings.Split(string(bs), ",")
 }
