@@ -1,6 +1,10 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"io/ioutil"
+	"strings"
+)
 
 type deckType []string
 
@@ -26,4 +30,16 @@ func (deck deckType) shuffle() {
 	for i, card := range deck {
 		fmt.Println(i, card)
 	}
+}
+
+func deal(deck deckType, handSize int) (deckType, deckType) {
+	return deck[:handSize], deck[handSize:]
+}
+
+func (deck deckType) toString() string {
+	return strings.Join(deck, ",")
+}
+
+func (deck deckType) saveToFile(filename string) error {
+	return ioutil.WriteFile(filename, []byte(deck.toString()), 0666)
 }
