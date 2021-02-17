@@ -5,9 +5,10 @@ import (
 	"net/http"
 )
 
-func handlerFunc(w http.ResponseWriter, r *http.Request) {
+func handlerFunc(req http.ResponseWriter, res *http.Request) {
+	req.Header().Set("Content-Type", "text/html")
 
-	fmt.Fprint(w, "<h1>Welcome to Golang... Dynamic reloading</h1>")
+	fmt.Fprint(req, "To get in touch, please send an email to <a href=\"mailto:test@mail.com\">test@mail.com</a>")
 }
 
 func main() {
