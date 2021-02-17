@@ -1,9 +1,17 @@
 package main
 
-import f "fmt"
+import (
+	f "fmt"
+	"runtime"
+)
 
+/*
+main function
+Go executes this program using this fucntion.
+There shoudl only be one main file in a main package.
+Executable programs are called commands.
+*/
 func main() {
 	f.Println("scope")
-	bye()
-	hey()
+	f.Println(runtime.NumCPU())
 }
